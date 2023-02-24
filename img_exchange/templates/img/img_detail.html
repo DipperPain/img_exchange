@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load user_filters %}
+{% load thumbnail %}
+
+<body>       
+{% block content %}
+    <main>
+      <div class="row">
+        <aside class="col-12 col-md-3">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              Дата публикации: {{img.created|date:"d E Y"}}
+            </li>
+            <li class="list-group-item">
+               Автор: {{img.author.get_full_name}} {{username}} </a>
+            </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+              Всего постов автора:  {{number_posts}}
+            </li>
+            <li class="list-group-item">
+              <a href="{% url 'img:profile' username %}">
+                все посты пользователя
+              </a>
+
+            </li>
+          </ul>
+        </aside>
+        <article class="col-12 col-md-9">
+          {% thumbnail img.image_1 "960x339" crop="center" upscale=True as im %}
+            <img class="card-img my-2"   src="{{ im.url }}" width="960" height="339" alt="">
+          {% endthumbnail %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            like:  {{likes}}
+          </li>
+            {% if post.author.get_username == user.username  %}
+            <p>
+
+              <a class="btn btn-primary" href="{% url 'img:img_edit' img.pk %}">
+              редактировать запись
+              </a> 
+            </p>     
+            {% endif%}
+
+
+
+
+
+
+          
+{% endblock %} 
